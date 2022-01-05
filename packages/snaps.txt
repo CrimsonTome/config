@@ -1,0 +1,10 @@
+audacity
+btop
+codium
+discord
+firefox
+nxim
+retroarch
+spotify
+teams
+parsec
