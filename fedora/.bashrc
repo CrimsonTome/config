@@ -38,12 +38,14 @@ alias ds='dnf search'
 alias dr='sudo dnf remove'
 alias dar='sudo dnf autoremove'
 alias dli='dnf list --installed'
+alias patch='sudo dnf upgrade --refresh && sudo reboot now'
 alias gitc='git clone' #clone a git repo
 alias gitpl='git pull' #pull updates from a git repo
 alias gitph='git push' #push local updates to a git repo
 alias gitl='git log' #check git log
 alias gitac='git commit -am' #adds all changes to commit and add a comment 
 alias gits='git status' #check git status
+alias gita='git add -A'
 alias untar='tar -zxvf' #extract files from archive
 alias ipe='curl ipinfo.io/ip' #check external ip address
 alias c='clear' #clear terminal
@@ -63,10 +65,11 @@ alias mv='mv -vi' #move
 alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
 alias sshserver='mosh root@192.168.100.2' #ssh's into my server 
 alias sudo='sudo -p "$(printf "\033[1;31mPassword: \033[0;0m" )"' 
-alias pullall='for i in */.git; do cd $(dirname $i); echo $(dirname $i); git pull; cd ..; echo ; done'
+alias pullall='for i in */.git; do cd $(dirname $i); git pull -q; cd ..; done; echo done'
 alias aria='aria2c --console-log-level=error'
 alias gzipc='gzip --keep -9' #max compression keeping the file
 alias gitamendcomment='git commit --amend'
+alias reboot='sudo reboot'
 up () { #goes up x directories
   local d=""
   local limit="$1"
