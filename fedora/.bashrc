@@ -28,10 +28,10 @@ unset rc
 
 
 
-PS1=$"\w\n💻"$(tput blink)"-> "$(tput sgr0)
+PS1=$"\w\n`whoami`💻`hostname`"$(tput blink)"-> "$(tput sgr0)
 
 
-alias ls='ls -Al --color=auto'
+alias ls='ls -Alh --color=auto'
 alias di='sudo dnf install'
 alias dud='sudo dnf update -y'
 alias ds='dnf search'
@@ -190,6 +190,11 @@ gittimemachine() {
   # find the one before you broke everything
   git reset HEAD@{$index}
   # magic time machine
+}
+gitcloneorg() {
+  read -p "Enter org name: " name
+  GHORG={$name}; curl "https://api.github.com/orgs/$GHORG/repos?per_page=1000" | grep -o 'git@[^"]*' | xargs -L1 git clone
+
 }
 
 #PF_INFO="ascii title os host kernel uptime shell wm de" 
