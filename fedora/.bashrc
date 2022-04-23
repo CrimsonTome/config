@@ -39,13 +39,20 @@ alias dr='sudo dnf remove'
 alias dar='sudo dnf autoremove'
 alias dli='dnf list --installed'
 alias patch='sudo dnf upgrade --refresh && sudo reboot now'
-alias gitc='git clone' #clone a git repo
-alias gitpl='git pull' #pull updates from a git repo
-alias gitph='git push' #push local updates to a git repo
-alias gitl='git log' #check git log
-alias gitac='git commit -am' #adds all changes to commit and add a comment 
-alias gits='git status' #check git status
-alias gita='git add -A'
+alias gc='git clone' #clone a git repo
+alias gpl='git pull' #pull updates from a git repo
+alias gph='git push' #push local updates to a git repo
+alias gl='git log' #check git log
+alias gac='git commit -am' #adds all changes to commit and add a comment 
+alias gs='git status' #check git status
+alias ga='git add -A'
+
+#gh section
+
+alias ghc='gh clone repo'
+alias ghi='gh issue'
+alias ghpr='gh pr'
+
 alias untar='tar -zxvf' #extract files from archive
 alias ipe='curl ipinfo.io/ip' #check external ip address
 alias c='clear' #clear terminal
