@@ -43,9 +43,11 @@ alias gc='git clone' #clone a git repo
 alias gpl='git pull' #pull updates from a git repo
 alias gph='git push' #push local updates to a git repo
 alias gl='git log' #check git log
-alias gac='git commit -am' #adds all changes to commit and add a comment 
+alias ga='git add -A' #add all changes to commit
+alias gcm='git commit -mS' #commits to branch and signs the commit with gpg
 alias gs='git status' #check git status
 alias ga='git add -A'
+alias dfh='df -h' #disk space
 
 #gh section
 
@@ -204,5 +206,20 @@ gitcloneorg() {
 
 }
 
-#PF_INFO="ascii title os host kernel uptime shell wm de" 
-#PF_ASCII="fedora" pfetch|lolcat #displays sysem info on bash startup
+##-----------------------------------------------------
+## synth-shell-greeter.sh
+if [ -f /home/ctome/.config/synth-shell/synth-shell-greeter.sh ] && [ -n "$( echo $- | grep i )" ]; then
+	source /home/ctome/.config/synth-shell/synth-shell-greeter.sh
+fi
+
+##-----------------------------------------------------
+## synth-shell-prompt.sh
+if [ -f /home/ctome/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
+	source /home/ctome/.config/synth-shell/synth-shell-prompt.sh
+fi
+
+##-----------------------------------------------------
+## better-history
+if [ -f /home/ctome/.config/synth-shell/better-history.sh ] && [ -n "$( echo $- | grep i )" ]; then
+	source /home/ctome/.config/synth-shell/better-history.sh
+fi

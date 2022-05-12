@@ -1,9 +1,10 @@
 [user]
-	name = CrimsonTome
-	email = crimsontome427@protonmail.com
-[author]
 	name = Matt Clark
 	email = 4matt2clark7@gmail.com
+	signingKey = 70352871F95F9905
+[author]
+	name = CrimsonTome
+	email = crimsontome427@protonmail.com
 [url "git@github.com:"]
         insteadOf = https://github.com/
 [url "git@github.com:"]
