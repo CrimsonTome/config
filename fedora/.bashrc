@@ -48,6 +48,7 @@ alias gcm='git commit -mS' #commits to branch and signs the commit with gpg
 alias gs='git status' #check git status
 alias ga='git add -A'
 alias dfh='df -h' #disk space
+alias dush='du -sh'
 alias docker='sudo docker'
 alias docker-compose='sudo docker-compose'
 alias dockerkillall='sudo docker kill $(docker container ls -q)'
