@@ -44,7 +44,7 @@ alias gpl='git pull' #pull updates from a git repo
 alias gph='git push' #push local updates to a git repo
 alias gl='git log' #check git log
 alias ga='git add -A' #add all changes to commit
-alias gcm='git commit -mS' #commits to branch and signs the commit with gpg
+alias gcm='git commit -S -m' #commits to branch and signs the commit with gpg
 alias gs='git status' #check git status
 alias ga='git add -A'
 alias dfh='df -h' #disk space
@@ -52,11 +52,9 @@ alias dush='du -sh'
 alias docker='sudo docker'
 alias docker-compose='sudo docker-compose'
 alias dockerkillall='sudo docker kill $(docker container ls -q)'
-#gh section
-
-alias ghc='gh clone repo'
-alias ghi='gh issue'
-alias ghpr='gh pr'
+alias univpn='cd ~/; ./hullvpn; cd -'
+alias fld='sudo du -ahx . | sort -rh | head -5' #finds large dirs
+alias f='fuck'
 
 alias untar='tar -zxvf' #extract files from archive
 alias ipe='curl ipinfo.io/ip' #check external ip address
@@ -208,7 +206,6 @@ gitcloneorg() {
   GHORG={$name}; curl "https://api.github.com/orgs/$GHORG/repos?per_page=1000" | grep -o 'git@[^"]*' | xargs -L1 git clone
 
 }
-
 ##-----------------------------------------------------
 ## synth-shell-greeter.sh
 if [ -f /home/ctome/.config/synth-shell/synth-shell-greeter.sh ] && [ -n "$( echo $- | grep i )" ]; then
@@ -226,3 +223,5 @@ fi
 if [ -f /home/ctome/.config/synth-shell/better-history.sh ] && [ -n "$( echo $- | grep i )" ]; then
 	source /home/ctome/.config/synth-shell/better-history.sh
 fi
+
+eval "$(thefuck --alias)"
