@@ -46,7 +46,10 @@ alias gs='git status' #check git status
 alias ga='git add -A'
 alias dfh='df -h' #disk space
 alias dush='du -sh'
-
+alias ghr='gh repo'
+alias ghrc='gh repo create'
+alias ghs='gh status'
+alias ghpr='gh pr'
 alias untar='tar -zxvf' #extract files from archive
 alias ipe='curl ipinfo.io/ip' #check external ip address
 alias c='clear' #clear terminal
