@@ -30,7 +30,6 @@ unset rc
 
 PS1=$"\w\n`whoami`💻`hostname`"$(tput blink)"-> "$(tput sgr0)
 
-
 alias ls='ls -Alh --color=auto'
 alias di='sudo dnf install'
 alias dud='sudo dnf update -y'
@@ -44,7 +43,7 @@ alias gpl='git pull' #pull updates from a git repo
 alias gph='git push' #push local updates to a git repo
 alias gl='git log' #check git log
 alias ga='git add -A' #add all changes to commit
-alias gcm='git commit -S -m' #commits to branch and signs the commit with gpg
+alias gcm='git commit -S -am' #adds all changes, commits to branch and signs the commit with gpg
 alias gs='git status' #check git status
 alias ga='git add -A'
 
@@ -56,6 +55,23 @@ alias dfh='df -h' #disk space
 alias dush='du -sh'
 alias docker='sudo docker'
 alias docker-compose='sudo docker-compose'
+
+
+alias dcud='sudo docker-compose up -d'
+alias dcd='sudo docker-compuse down'
+alias dcp='sudo docker-compose pull'
+
+pdu() {
+	dcp
+	dcd
+	dcud
+}
+
+downup() {
+	dcd
+	dcud	
+}
+
 alias dockerkillall='sudo docker kill $(docker container ls -q)'
 alias univpn='cd ~/; ./hullvpn; cd -'
 alias fld='sudo du -ahx . | sort -rh | head -5' #finds large dirs
@@ -80,7 +96,7 @@ alias mv='mv -vi' #move
 alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
 alias sshserver='mosh root@192.168.100.2' #ssh's into my server 
 alias sudo='sudo -p "$(printf "\033[1;31mPassword: \033[0;0m" )"' 
-alias pullall='for i in */.git; do cd $(dirname $i); git pull -q; cd ..; done; echo done'
+alias pullall='for i in */.git; do cd $(dirname $i); git pull; cd ..; done; echo done'
 alias aria='aria2c --console-log-level=error'
 alias gzipc='gzip --keep -9' #max compression keeping the file
 alias gitamendcomment='git commit --amend'
