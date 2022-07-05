@@ -31,7 +31,7 @@ unset rc
 PS1=$"\w\n`whoami`💻`hostname`"$(tput blink)"-> "$(tput sgr0)
 
 
-alias ls='ls -Alh --color=auto'
+alias ls='ls -ltrhA --color=auto'
 alias ai='sudo apt install'
 alias aud='sudo apt update -y; sudo apt upgrade -y'
 alias as='apt search'
