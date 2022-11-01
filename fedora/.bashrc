@@ -14,6 +14,8 @@ export PATH
 
 export HISTSIZE=-1
 export HISTFILESIZE=-1
+shopt -s histappend
+
 
 # User specific aliases and functions
 if [ -d ~/.bashrc.d ]; then
@@ -28,9 +30,11 @@ unset rc
 
 
 
-PS1=$"\w\n`whoami`💻`hostname`"$(tput blink)"-> "$(tput sgr0)
+# PS1=$"\w`whoami`💻`hostname`"$(tput blink)"-> "$(tput sgr0)
+
 
 alias ls='ls -Alh --color=auto'
+alias ls='exa -la'
 alias di='sudo dnf install'
 alias dud='sudo dnf update -y'
 alias ds='dnf search'
@@ -43,10 +47,10 @@ alias gpl='git pull' #pull updates from a git repo
 alias gph='git push' #push local updates to a git repo
 alias gl='git log' #check git log
 alias ga='git add -A' #add all changes to commit
-alias gcm='git commit -S -am' #adds all changes, commits to branch and signs the commit with gpg
+# alias gcm='git commit -S -am' #adds all changes, commits to branch and signs the commit with gpg
+alias gcm='commit'
 alias gs='git status' #check git status
-alias ga='git add -A'
-
+alias gr='git remote -v'
 alias ghr='gh repo'
 alias ghrc='gh repo create'
 alias ghs='gh status'
@@ -95,8 +99,7 @@ alias cpdir='cp -vr' #copy directory and contents
 alias mv='mv -vi' #move
 alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
 alias sshserver='mosh root@192.168.100.2' #ssh's into my server 
-alias sudo='sudo -p "$(printf "\033[1;31mPassword: \033[0;0m" )"' 
-alias pullall='for i in */.git; do cd $(dirname $i); git pull; cd ..; done; echo done'
+alias pullall='for i in */.git; do cd $(dirname $i); git pull -q; cd ..; done; echo done'
 alias aria='aria2c --console-log-level=error'
 alias gzipc='gzip --keep -9' #max compression keeping the file
 alias gitamendcomment='git commit --amend'
@@ -227,22 +230,45 @@ gitcloneorg() {
   GHORG={$name}; curl "https://api.github.com/orgs/$GHORG/repos?per_page=1000" | grep -o 'git@[^"]*' | xargs -L1 git clone
 
 }
-##-----------------------------------------------------
-## synth-shell-greeter.sh
-if [ -f /home/ctome/.config/synth-shell/synth-shell-greeter.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/ctome/.config/synth-shell/synth-shell-greeter.sh
+ctop(){
+
+  docker run --rm -ti \
+  --name=ctop \
+  --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+  quay.io/vektorlab/ctop:latest
+}
+listen-to-yt() { if [[ -z "$1" ]]; then echo "Enter a search string!"; else mpv "$(youtube-dl --default-search 'ytsearch1:' \"$1\" --get-url | tail -1)"; fi }
+
+eval "$(starship init bash)"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export GPG_TTY=/dev/pts/2
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. "$HOME/.cargo/env"
+function gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}
+source /home/ctome/.dvm/dvm.sh
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+
+### Bashhub.com Installation.
+### This Should be at the EOF. https://bashhub.com/docs
+if [ -f ~/.bashhub/bashhub.sh ]; then
+    source ~/.bashhub/bashhub.sh
 fi
 
-##-----------------------------------------------------
-## synth-shell-prompt.sh
-if [ -f /home/ctome/.config/synth-shell/synth-shell-prompt.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/ctome/.config/synth-shell/synth-shell-prompt.sh
-fi
 
-##-----------------------------------------------------
-## better-history
-if [ -f /home/ctome/.config/synth-shell/better-history.sh ] && [ -n "$( echo $- | grep i )" ]; then
-	source /home/ctome/.config/synth-shell/better-history.sh
-fi
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
-eval "$(thefuck --alias)"
+export EDITOR="vim"
+
+
+# cohost bot things
+export COOKIE="use the cohost cookie"
+export LENGTH="8"
+export LENGTH="9"
