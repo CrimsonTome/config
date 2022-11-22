@@ -32,9 +32,9 @@ unset rc
 
 # PS1=$"\w`whoami`💻`hostname`"$(tput blink)"-> "$(tput sgr0)
 
-
-alias ls='ls -Alh --color=auto'
-alias ls='exa -la'
+alias q='exit'
+# alias ls='ls -Alh  --color=auto'
+alias ls='exa -lah -snew'
 alias di='sudo dnf install'
 alias dud='sudo dnf update -y'
 alias ds='dnf search'
@@ -60,7 +60,6 @@ alias dush='du -sh'
 alias docker='sudo docker'
 alias docker-compose='sudo docker-compose'
 
-
 alias dcud='sudo docker-compose up -d'
 alias dcd='sudo docker-compuse down'
 alias dcp='sudo docker-compose pull'
@@ -77,9 +76,7 @@ downup() {
 }
 
 alias dockerkillall='sudo docker kill $(docker container ls -q)'
-alias univpn='cd ~/; ./hullvpn; cd -'
 alias fld='sudo du -ahx . | sort -rh | head -5' #finds large dirs
-alias f='fuck'
 
 alias untar='tar -zxvf' #extract files from archive
 alias ipe='curl ipinfo.io/ip' #check external ip address
@@ -245,30 +242,11 @@ eval "$(starship init bash)"
 
 export GPG_TTY=/dev/pts/2
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-. "$HOME/.cargo/env"
 function gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}
-source /home/ctome/.dvm/dvm.sh
 export DOTNET_ROOT=$HOME/.dotnet
 export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 
-### Bashhub.com Installation.
-### This Should be at the EOF. https://bashhub.com/docs
-if [ -f ~/.bashhub/bashhub.sh ]; then
-    source ~/.bashhub/bashhub.sh
-fi
 
-
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
+export PATH=$PATH:$HOME/bin
 export EDITOR="vim"
 
-
-# cohost bot things
-export COOKIE="use the cohost cookie"
-export LENGTH="8"
-export LENGTH="9"
