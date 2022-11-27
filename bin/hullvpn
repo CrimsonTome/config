@@ -1,0 +1,51 @@
+#!/bin/env python3
+import os
+import sys
+import subprocess
+from shlex import quote as escape
+from time import sleep
+from signal import signal, SIGINT, SIG_IGN 
+
+def openconnect(host):
+    # gp-saml-gui will manage SAML authentication and launch openconnect
+    # with a valid login session. openconnect is ran as root but drops its
+    # privileges once network is configured, hence -U and --csd-user option.
+    # root access is needed again when exiting, hence the vpnc-script is
+    # launched with sudo.
+    hip_report_cmd = "/usr/libexec/openconnect/hipreport.sh"
+    network_setup_cmd = "sudo -E /etc/vpnc/vpnc-script"
+    cmd = ("gp-saml-gui --portal --clientos Windows --sudo-openconnect " + \
+        "{0} -- --queue-len 20 -U {1} --csd-user {1} --csd-wrapper {2} " + \
+        "--script {3}").format(escape(host), escape(os.getlogin()),
+            escape(hip_report_cmd), escape(network_setup_cmd))
+    
+    # set environment variables for gp-saml-gui...
+    env = os.environ.copy() # base on current env vars
+    
+    # workaround for UNSAFE_LEGACY_RENEGOTIATION_DISABLED error on openssl 3
+    # distros where legacy renogtiation option is now disabled by default. 
+    # ref: https://bugs.launchpad.net/ubuntu/+source/openssl/+bug/1963834
+    env["OPENSSL_CONF"] = os.path.expanduser("~/.hullvpn-ssl.cnf")
+    
+    # disable compositing mode to workaround invisible browser bug
+    # ref: https://bugs.launchpad.net/ubuntu/+source/evolution/+bug/1966418
+    env["WEBKIT_DISABLE_COMPOSITING_MODE"] = "1"
+    
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT, shell=True, env=env, universal_newlines=True)
+    try:
+        for ln in proc.stdout:
+            sys.stdout.write(ln)
+            # check for phrases indicative of a lost connection
+            if "detected dead peer" in ln or "Network is unreachable" in ln:
+                proc.terminate() # terminate openconnect process
+                return 1
+    except KeyboardInterrupt:
+        s = signal(SIGINT, SIG_IGN) # turn off keyboard interrupt
+        proc.terminate() # terminate process
+        sys.stdout.write(proc.stdout.read()) # write final messages
+        signal(SIGINT, s) # turn keyboard interrupt back on
+    return proc.wait() # return exit code of process
+
+while openconnect("pa-vpn.hull.ac.uk") != 0: # restart until success exit code
+    sleep(3) # delay between reattempts
