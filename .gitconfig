@@ -9,6 +9,8 @@
         insteadOf = https://github.com/
 [url "ssh://git@github.com:"]
 	insteadOf = https://github.com/
+[url "https://github.com/rust-lang/crates.io-index"]
+  insteadOf = https://github.com/rust-lang/crates.io-index
 
 [url "git@git.crimsontome.com:"]
         insteadOf = https://git.crimsontome.com/
@@ -16,6 +18,8 @@
         insteadOf = https://git.crimsontome.com/
 [init]
 	defaultBranch = main
+	# includes talisman
+	templatedir = /home/ctome/.git-template
 [pull]
 	rebase = true
 [commit]
