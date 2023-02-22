@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: fedora/.bashrc
+  checksum: 47e85728dc6f40e28c7d0fa93b0acd4673046c1686f7a5e9d259b958431e46df
+version: "1.0"

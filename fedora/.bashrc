@@ -30,24 +30,19 @@ unset rc
 
 
 
-# PS1=$"\w`whoami`💻`hostname`"$(tput blink)"-> "$(tput sgr0)
-
+alias vim='hx'
 alias q='exit'
-# alias ls='ls -Alh  --color=auto'
-alias ls='exa -lah -snew'
+alias ls='lsd -lrthA'
 alias di='sudo dnf install'
 alias dud='sudo dnf update -y'
 alias ds='dnf search'
 alias dr='sudo dnf remove'
 alias dar='sudo dnf autoremove'
 alias dli='dnf list --installed'
-alias patch='sudo dnf upgrade --refresh && sudo reboot now'
 alias gc='git clone' #clone a git repo
 alias gpl='git pull' #pull updates from a git repo
 alias gph='git push' #push local updates to a git repo
 alias gl='git log' #check git log
-alias ga='git add -A' #add all changes to commit
-# alias gcm='git commit -S -am' #adds all changes, commits to branch and signs the commit with gpg
 alias gcm='commit'
 alias gs='git status' #check git status
 alias gr='git remote -v'
@@ -59,7 +54,6 @@ alias dfh='df -h' #disk space
 alias dush='du -sh'
 alias docker='sudo docker'
 alias docker-compose='sudo docker-compose'
-
 alias dcud='sudo docker-compose up -d'
 alias dcd='sudo docker-compuse down'
 alias dcp='sudo docker-compose pull'
@@ -76,8 +70,8 @@ downup() {
 }
 
 alias dockerkillall='sudo docker kill $(docker container ls -q)'
+alias univpn='cd ~/; ./hullvpn; cd -'
 alias fld='sudo du -ahx . | sort -rh | head -5' #finds large dirs
-
 alias untar='tar -zxvf' #extract files from archive
 alias ipe='curl ipinfo.io/ip' #check external ip address
 alias c='clear' #clear terminal
@@ -95,12 +89,17 @@ alias cp='cp -vi'  #copy
 alias cpdir='cp -vr' #copy directory and contents
 alias mv='mv -vi' #move
 alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
-alias sshserver='mosh root@192.168.100.2' #ssh's into my server 
 alias pullall='for i in */.git; do cd $(dirname $i); git pull -q; cd ..; done; echo done'
 alias aria='aria2c --console-log-level=error'
 alias gzipc='gzip --keep -9' #max compression keeping the file
 alias gitamendcomment='git commit --amend'
 alias reboot='sudo reboot'
+
+#https://github.com/gleitz/howdoi
+alias h='function hdi(){ howdoi $* -c; }; hdi'
+
+alias pyvenv='virtualenv env -p python3 && source env/bin/activate'
+
 up () { #goes up x directories
   local d=""
   local limit="$1"
@@ -121,60 +120,6 @@ up () { #goes up x directories
 }
 
 # from https://github.com/dylanaraps/pure-bash-bible/blob/master/README.md
-
-bkr() { #runs a command in the background 
-    (nohup "$@" &>/dev/null &)
-}
-
-trim_all() { #trim all y from string x
-    # Usage: trim_all "   example   string    "
-    set -f
-    set -- $*
-    printf '%s
-' "$*"
-    set +f
-}
-
-split() { #split a string based on a delimiter
-   # Usage: split "string" "delimiter"
-   IFS=$'
-' read -d "" -ra arr <<< "${1//$2/$'
-'}"
-   printf '%s
-' "${arr[@]}"
-}
-
-lower() { #convert to lowercase
-    # Usage: lower "string"
-    printf '%s
-' "${1,,}"
-}
-
-upper() { #convert to uppercase
-    # Usage: upper "string"
-    printf '%s
-' "${1^^}"
-}
-
-reverse_case() { #reverse the case of a string
-    # Usage: reverse_case "string"
-    printf '%s
-' "${1~~}"
-}
-
-strip_all() { #strp all y from x
-    # Usage: strip_all "string" "pattern"
-    printf '%s
-' "${1//$2}"
-}
-
-lines() { #show line count of file
-    # Usage: lines "file"
-    mapfile -tn 0 lines < "$1"
-    printf '%s
-' "${#lines[@]}"
-}
-
 # # ex = EXtractor for all kinds of archives
 # # usage: ex <file>
 ex ()
@@ -201,6 +146,7 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+
 gitresettoremote() {
   read -p "Enter branch name: " branchname 
   git fetch origin
@@ -237,16 +183,23 @@ ctop(){
 listen-to-yt() { if [[ -z "$1" ]]; then echo "Enter a search string!"; else mpv "$(youtube-dl --default-search 'ytsearch1:' \"$1\" --get-url | tail -1)"; fi }
 
 eval "$(starship init bash)"
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 export GPG_TTY=/dev/pts/2
-
 function gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}
 export DOTNET_ROOT=$HOME/.dotnet
-export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+export EDITOR="hx"
+export PAGER="less"
+complete -C /usr/bin/terraform terraform
 
+# Created by `pipx` on 2022-11-14 15:41:06
+export PATH="$PATH:/home/ctome/.local/bin"
 
-export PATH=$PATH:$HOME/bin
-export EDITOR="vim"
-
+# >>> talisman >>>
+# Below environment variables should not be modified unless you know what you are doing
+export TALISMAN_HOME=/home/ctome/.talisman/bin
+alias talisman=$TALISMAN_HOME/talisman_linux_amd64
+export TALISMAN_INTERACTIVE=true
+# <<< talisman <<<
+. "$HOME/.cargo/env"
+eval "$(mcfly init bash)"
+export MCFLY_LIGHT=FALSE
+export MCFLY_KEY_SCHEME=vim
