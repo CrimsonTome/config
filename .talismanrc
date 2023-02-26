@@ -2,5 +2,5 @@ fileignoreconfig:
 - filename: fedora/.bashrc
   checksum: 88abdbaa0680340a0344c159580fdf0b322664904a10ed97b08464e7f14a5755
 - filename: fedora/.bashrc.d/.bash_aliases
-  checksum: 742b68bcd2eb3037aeab2fc34df99298aee5a931ca2a3224326690a3985d05b1
+  checksum: 708ba03bee8171b1266d26b745675ef631602ba1ddf905c48f1de1930f05e793
 version: "1.0"
