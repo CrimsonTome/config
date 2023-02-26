@@ -12,7 +12,12 @@ alias q='exit'
 #if lsd is installed alias ls to it
 if which ls >/dev/null 2>&1; then
     alias ls='lsd -lrthA'
+else
+	alias ls='ls -lrthA'
 fi
+
+# because I always mistype
+alias sl='ls'
 
 # dnf aliases
 alias di='sudo dnf install'
@@ -130,6 +135,23 @@ alias gzipc='gzip --keep -9' #max compression keeping the file
 
 # file management / navigation functions
 
+
+# termbin for any kind of file
+transfer() { 
+	if [ $# -eq 0 ]; then 
+	printf "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md";
+	return 1
+	fi 
+	tmpfile=$( mktemp -t transferXXX )
+	if tty -s; then 
+		basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "$tmpfile"
+	else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile"
+	fi 
+	cat "$tmpfile"; command rm -f "$tmpfile"; }
+
+# from https://gitlab.com/sbrl/bin/-/blob/master/.bash_aliases with shellcheck fix
+mcd() { mkdir -pv "$1" && cd "$1" || exit;}
+
 up () { #goes up x directories
   local d=""
   local limit="$1"
@@ -185,6 +207,7 @@ alias mp3='yt-dlp -x --audio-format mp3' #grab the mp3 of a YT video
 alias eb='clear && exec bash' #reload bash and clear the terminal screen
 alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
 alias reboot='sudo reboot'
+alias title="echo -e '\033]2;'$1'\033\\'"
 #https://github.com/gleitz/howdoi
 hdi(){ howdoi "$*" -c; }
 alias pyvenv='virtualenv env -p python3 && source env/bin/activate' # start a python virtual environment
