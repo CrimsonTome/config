@@ -20,7 +20,8 @@ alias dud='sudo dnf update -y'
 alias ds='dnf search'
 alias dr='sudo dnf remove'
 alias dar='sudo dnf autoremove'
-alias dli='dnf list --installed'
+alias dli='dnf list installed'
+alias dlu='dnf history userinstalled'
 
 # git aliases
 alias gc='git clone' #clone a git repo
