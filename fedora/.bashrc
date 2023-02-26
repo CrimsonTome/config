@@ -23,7 +23,7 @@ if [ -f "$HOME"/.bashrc.d/.bash_aliases ] ; then
 fi
 
 eval "$(starship init bash)"
-export GPG_TTY=/dev/pts/2
+export GPG_TTY=$(tty)
 export DOTNET_ROOT=$HOME/.dotnet
 
 if which hx >/dev/null 2>&1; then
