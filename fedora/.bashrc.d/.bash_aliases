@@ -2,7 +2,6 @@
 
 # Bash aliases and functions
 
-
 #if helix is installed, alias vim to it 
 if which hx >/dev/null 2>&1; then
     alias vim='hx';
@@ -34,6 +33,41 @@ if [ -f $HOME/bin/commit ] ; then
 fi
 alias gs='git status' #check git status
 alias gr='git remote -v'
+alias gitamendcomment='git commit --amend'
+
+# should extract to a function
+alias pullall='for i in */.git; do cd $(dirname $i); git pull -q; cd ..; done; echo done'
+
+# git functions
+gitresettoremote() {
+  read -p "Enter branch name: " branchname 
+  git fetch origin
+  git checkout $branchname
+  git reset --hard origin/$branchname
+  git clean -d --force
+}
+gitamendfiles() {
+  git add . # or add individual files
+  git commit --amend --no-edit
+}
+gittimemachine() {
+  git reflog
+  read -p "Enter index: " index
+  # you will see a list of every thing you've
+  # done in git, across all branches!
+  # each one has an index HEAD@{index}
+  # find the one before you broke everything
+  git reset HEAD@{$index}
+  # magic time machine
+}
+gitcloneorg() {
+  read -p "Enter org name: " name
+  GHORG={$name}; curl "https://api.github.com/orgs/$GHORG/repos?per_page=1000" | grep -o 'git@[^"]*' | xargs -L1 git clone
+}
+
+function gi() {
+	curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;
+}
 
 # gh aliases
 if which gh >/dev/null 2>&1; then
@@ -76,15 +110,10 @@ downup() {
 }
 
 
+# file management / navigation aliases
 
 alias fld='sudo du -ahx . | sort -rh | head -5' #finds large dirs
 alias untar='tar -zxvf' #extract files from archive
-alias ipe='curl ipinfo.io/ip' #check external ip address
-alias c='clear' #clear terminal
-alias words='wc -w' #check word count of a file   
-alias yt='yt-dlp' #download a YT video
-alias mp3='yt-dlp -x --audio-format mp3' #grab the mp3 of a YT video
-alias eb='clear && exec bash' #reload bash and clear the terminal screen
 alias back='cd -' #go back to the directory you were in previously (should probably add some pushd stuff here)
 # -v adds verbosity, -i makes it interactive 
 alias mkdir='mkdir -pv' #make a directory allowing for layering e.g. mkdir foo/bar/  
@@ -94,18 +123,11 @@ alias rmdir='rmdir -v' #remove directory
 alias cp='cp -vi'  #copy 
 alias cpdir='cp -vr' #copy directory and contents
 alias mv='mv -vi' #move
-alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
-alias pullall='for i in */.git; do cd $(dirname $i); git pull -q; cd ..; done; echo done'
+alias words='wc -w' #check word count of a file   
 alias aria='aria2c --console-log-level=error'
 alias gzipc='gzip --keep -9' #max compression keeping the file
-alias gitamendcomment='git commit --amend'
-alias reboot='sudo reboot'
 
-#https://github.com/gleitz/howdoi
-alias h='function hdi(){ howdoi $* -c; }; hdi'
-
-# start a python virtual environment
-alias pyvenv='virtualenv env -p python3 && source env/bin/activate'
+# file management / navigation functions
 
 up () { #goes up x directories
   local d=""
@@ -154,32 +176,19 @@ ex ()
   fi
 }
 
-gitresettoremote() {
-  read -p "Enter branch name: " branchname 
-  git fetch origin
-  git checkout $branchname
-  git reset --hard origin/$branchname
-  git clean -d --force
-}
-gitamendfiles() {
-  git add . # or add individual files
-  git commit --amend --no-edit
-}
-gittimemachine() {
-  git reflog
-  read -p "Enter index: " index
-  # you will see a list of every thing you've
-  # done in git, across all branches!
-  # each one has an index HEAD@{index}
-  # find the one before you broke everything
-  git reset HEAD@{$index}
-  # magic time machine
-}
-gitcloneorg() {
-  read -p "Enter org name: " name
-  GHORG={$name}; curl "https://api.github.com/orgs/$GHORG/repos?per_page=1000" | grep -o 'git@[^"]*' | xargs -L1 git clone
+# misc aliases and functions, yet to group
+alias ipe='curl ipinfo.io/ip' #check external ip address
+alias c='clear' #clear terminal
+alias yt='yt-dlp' #download a YT video
+alias mp3='yt-dlp -x --audio-format mp3' #grab the mp3 of a YT video
+alias eb='clear && exec bash' #reload bash and clear the terminal screen
+alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
+alias reboot='sudo reboot'
+#https://github.com/gleitz/howdoi
+alias h='function hdi(){ howdoi $* -c; }; hdi'
+alias pyvenv='virtualenv env -p python3 && source env/bin/activate' # start a python virtual environment
 
-}
+# top for containers
 ctop(){
   docker run --rm -ti \
   --name=ctop \
@@ -192,9 +201,4 @@ listen-to-yt() {
 	echo "Enter a search string!"; 
 	else mpv "$(youtube-dl --default-search 'ytsearch1:' \"$1\" --get-url | tail -1)";
 	fi
-}
-
-
-function gi() {
-	curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;
 }
