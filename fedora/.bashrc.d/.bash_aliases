@@ -41,10 +41,10 @@ alias pullall='for i in */.git; do cd $(dirname $i); git pull -q; cd ..; done; e
 
 # git functions
 gitresettoremote() {
-  read -p "Enter branch name: " branchname 
+  read -rp "Enter branch name: " branchname 
   git fetch origin
-  git checkout $branchname
-  git reset --hard origin/$branchname
+  git checkout "$branchname"
+  git reset --hard origin/"$branchname"
   git clean -d --force
 }
 gitamendfiles() {
@@ -53,21 +53,21 @@ gitamendfiles() {
 }
 gittimemachine() {
   git reflog
-  read -p "Enter index: " index
+  read -rp "Enter index: " index
   # you will see a list of every thing you've
   # done in git, across all branches!
   # each one has an index HEAD@{index}
   # find the one before you broke everything
-  git reset HEAD@{$index}
+  git reset HEAD@"$index"
   # magic time machine
 }
 gitcloneorg() {
-  read -p "Enter org name: " name
-  GHORG={$name}; curl "https://api.github.com/orgs/$GHORG/repos?per_page=1000" | grep -o 'git@[^"]*' | xargs -L1 git clone
+  read -rp "Enter org name: " name
+  GHORG="$name"; curl "https://api.github.com/orgs/$GHORG/repos?per_page=1000" | grep -o 'git@[^"]*' | xargs -L1 git clone
 }
 
-function gi() {
-	curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;
+gi() {
+	curl -sL https://www.toptal.com/developers/gitignore/api/"$*" ;
 }
 
 # gh aliases
@@ -154,7 +154,7 @@ up () { #goes up x directories
 # # usage: ex <file>
 ex ()
 {
-  if [ -f $1 ] ; then
+  if [ -f "$1" ] ; then
     case $1 in
       *.tar.bz2)   tar xjf $1   ;;
       *.tar.gz)    tar xzf $1   ;;
@@ -186,7 +186,7 @@ alias eb='clear && exec bash' #reload bash and clear the terminal screen
 alias upstats='echo "Up since:" && uptime -s && uptime -p' #displays uptime stats 
 alias reboot='sudo reboot'
 #https://github.com/gleitz/howdoi
-alias h='function hdi(){ howdoi $* -c; }; hdi'
+hdi(){ howdoi "$*" -c; }
 alias pyvenv='virtualenv env -p python3 && source env/bin/activate' # start a python virtual environment
 
 # top for containers
@@ -200,6 +200,6 @@ ctop(){
 listen-to-yt() { 
 	if [[ -z "$1" ]]; then 
 	echo "Enter a search string!"; 
-	else mpv "$(youtube-dl --default-search 'ytsearch1:' \"$1\" --get-url | tail -1)";
+	else mpv "$(youtube-dl --default-search "ytsearch1:" \""$1"\" --get-url | tail -1)";
 	fi
 }

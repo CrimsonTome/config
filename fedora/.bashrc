@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # .bashrc
 
 # Source global definitions
@@ -6,7 +8,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+if ! [[ "$PATH" =~ "$HOME"/.local/bin:$HOME/bin: ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
@@ -16,28 +18,31 @@ export HISTSIZE=-1
 export HISTFILESIZE=-1
 shopt -s histappend
 
-if [ -f $HOME/.bashrc.d/.bash_aliases ] ; then
-	source $HOME/.bashrc.d/.bash_aliases
+if [ -f "$HOME"/.bashrc.d/.bash_aliases ] ; then
+	source "$HOME"/.bashrc.d/.bash_aliases
 fi
 
 eval "$(starship init bash)"
 export GPG_TTY=/dev/pts/2
-function gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}
 export DOTNET_ROOT=$HOME/.dotnet
-export EDITOR="hx"
+
+if which hx >/dev/null 2>&1; then
+	export EDITOR="hx"
+fi
+
 export PAGER="less"
 complete -C /usr/bin/terraform terraform
 
 # Created by `pipx` on 2022-11-14 15:41:06
-export PATH="$PATH:/home/ctome/.local/bin"
+export PATH="$PATH":/home/ctome/.local/bin
 
 # >>> talisman >>>
 # Below environment variables should not be modified unless you know what you are doing
 export TALISMAN_HOME=/home/ctome/.talisman/bin
-alias talisman=$TALISMAN_HOME/talisman_linux_amd64
+alias talisman="$TALISMAN_HOME"/talisman_linux_amd64
 export TALISMAN_INTERACTIVE=true
 # <<< talisman <<<
-. "$HOME/.cargo/env"
+. "$HOME"/.cargo/env
 eval "$(mcfly init bash)"
 export MCFLY_LIGHT=FALSE
 export MCFLY_KEY_SCHEME=vim
