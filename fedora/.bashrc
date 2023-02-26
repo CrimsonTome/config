@@ -39,10 +39,10 @@ export PATH="$PATH":/home/ctome/.local/bin
 # >>> talisman >>>
 # Below environment variables should not be modified unless you know what you are doing
 export TALISMAN_HOME=/home/ctome/.talisman/bin
-alias talisman="$TALISMAN_HOME"/talisman_linux_amd64
+alias talisman='$TALISMAN_HOME'/talisman_linux_amd64
 export TALISMAN_INTERACTIVE=true
 # <<< talisman <<<
-. "$HOME"/.cargo/env
+source "$HOME"/.cargo/env
 eval "$(mcfly init bash)"
 export MCFLY_LIGHT=FALSE
 export MCFLY_KEY_SCHEME=vim
