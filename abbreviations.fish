@@ -3,8 +3,14 @@
 abbr q exit
 abbr c clear
 
+# if the system has lsd installed
+if command -v lsd > /dev/null
+    abbr ls 'lsd -lth'
+    abbr lsa 'lsd -lAth`'
+end
+
 # if the system uses the dnf package manager
-if type -q $dnf
+if command -v dnf > /dev/null
     abbr di 'sudo dnf install'
     abbr dug 'sudo dnf upgrade --refresh -y'
     abbr ds 'dnf search'
@@ -14,14 +20,14 @@ if type -q $dnf
 end
 
 # if the system uses the apt package manager
-if type -q $apt
+if command -v apt > /dev/null
     abbr ai 'sudo apt install'
     abbr aud 'sudo apt update && sudo apt upgrade -y'
     abbr as 'apt search'
     abbr ar 'sudo apt remove'
     abbr aar 'sudo apt autoremove'
     # if nala is installed
-    if type -q $nala
+    if command -v nala > /dev/null
         abbr ai 'sudo nala install'
         abbr aud 'sudo nala upgrade -y'
         abbr as 'nala search'
@@ -43,7 +49,7 @@ abbr gitamendcomment 'git commit --amend'
 
 # gh abbreviations
 
-if type -q $gh
+if command -v gh > /dev/null
     abbr ghr 'gh repo'
     abbr ghrc 'gh repo create'
     abbr ghs 'gh status'
@@ -73,4 +79,3 @@ abbr lines 'wc -l'
 # grab externel ip address
 abbr ipe 'curl ipinfo.io/ip'
 abbr reboot 'sudo reboot now'
-
