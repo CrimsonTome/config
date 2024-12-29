@@ -1,5 +1,5 @@
 [user]
-	name = Rowan Clark
+	name = Robyn Clark
 	email = crimsontome427@protonmail.com
 	signingkey = F620D51904044094
 [author]
@@ -19,11 +19,16 @@
 [init]
 	defaultBranch = main
 	# includes talisman
-	templatedir = /home/ctome/.git-template
+	#templatedir = /home/ctome/.git-template
 [pull]
 	rebase = true
 [commit]
-	gpgsign = true
+	#gpgsign = true
 
 [push]
 	autoSetupRemote = true
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/usr/bin/gh auth git-credential
+
